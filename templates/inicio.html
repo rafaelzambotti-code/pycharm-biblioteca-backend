@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Rafael</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+
+        <h1>Biblioteca Rafael</h1>
+        <h2>Livros cadastrados</h2>
+
+        {% if session %}
+            <a href="/novo">Novo livro</a>
+            <a href="/logout">Sair</a>
+            <a href="/pdf">Gerar PDF</a>
+        {% else %}
+            <a href="/">Entrar</a>
+        {% endif %}
+
+        <hr>
+
+        {% for livro in livros %}
+
+            <div class="livro">
+                <h3>{{ livro[1] }}</h3>
+
+                    <img src="/uploads/{{ livro[0] }}.jpg" width="150">
+
+
+                <p>Código: {{ livro[0] }}</p>
+                <p>Autor: {{ livro[2] }}</p>
+                <p>Ano de publicação: {{ livro[3] }}</p>
+
+                {% if session %}
+                    <a href="/editar/{{ livro[0] }}">Editar</a>
+
+                    <a href="/excluir/{{ livro[0] }}"
+                       onclick="return confirm('Tem certeza que deseja excluir este livro?')">
+                        Excluir
+                    </a>
+                {% endif %}
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>
